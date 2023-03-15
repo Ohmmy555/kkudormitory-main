@@ -6,17 +6,25 @@ public class FacilitiesType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer FacTypeID;
-	private String FacTypeName;
+    private String FacName;
+	private String FacType;
     public Integer getFacTypeID() {
         return FacTypeID;
     }
     public void setFacTypeID(Integer facTypeID) {
         FacTypeID = facTypeID;
     }
-    public String getFacTypeName() {
-        return FacTypeName;
+    public String getFacName() {
+        return FacName;
     }
-    public void setFacTypeName(String facTypeName) {
-        FacTypeName = facTypeName;
+    public void setFacName(String facName) {
+        FacName = facName;
     }
+    public String getFacType() {
+        return FacType;
+    }
+    public void setFacType(String facType) {
+        FacType = facType;
+    }
+
 }

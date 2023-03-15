@@ -11,7 +11,7 @@ import com.kkudormitory.kkudormitory.model.repository.*;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-
+@CrossOrigin
 @RestController
 @RequestMapping("api/crud")
 public class CrudDormAPI {
@@ -45,7 +45,7 @@ public class CrudDormAPI {
 	
 //	   หอพักทำ pagination 
 	//http://localhost:8080/crud/page?sortBy=dormName&page=0
-	@GetMapping("/page")
+	@GetMapping("/admin/dorm")
 	public Page<Dormitory> test(
 			@RequestParam  Optional<Integer> page,
 			@RequestParam Optional<String> sortBy
@@ -60,7 +60,7 @@ public class CrudDormAPI {
 	@GetMapping("/detail/{id}")
 	public List<Map<String, Object>> getDetail(@PathVariable("id") Integer id) throws SQLException, ClassNotFoundException {
 	    Class.forName("com.mysql.cj.jdbc.Driver");
-	    Connection con = DriverManager.getConnection("jdbc:mysql://dbjavaweb.mysql.database.azure.com:3306/kkudormitory?characterEncoding=utf-8&useSSL=true", "supphitan", "0648801344@O");
+	    Connection con = DriverManager.getConnection("jdbc:mysql://localhost/kkudormitory?characterEncoding=utf-8&useSSL=true", "root", "");
 	    PreparedStatement pStatement = con.prepareStatement("SELECT facilites.facid,facilites.fac_typeid,facilites.fac_name FROM dormitory\n"
 	            + "JOIN facilites ON (facilites.dormid = dormitory.dormid)\n"
 	            + "WHERE dormitory.dormid=?");
@@ -165,8 +165,8 @@ public class CrudDormAPI {
 	    con.close();
 	    return resultList;
 	}
-//	 หน้าบ้านต้องส่ง json มาแบบนี้
-//	{
+// 	 หน้าบ้านต้องส่ง json มาแบบนี้
+// 	{
 //        "address":"test",
 //        "adminID":1,
 //        "centralFeePrice"::เป็น int หรือไม่ต้องส่งมาก็ได,
@@ -179,7 +179,7 @@ public class CrudDormAPI {
 //        "monthPrice":เป็น int หรือไม่ต้องส่งมาก็ได้ ,
 //        "waterFeePrice"::เป็น int หรือไม่ต้องส่งมาก็ได,
 //        "zoneID":1 
-//}
+// }
 	@PostMapping("/create")
 	public String createDorm(@RequestBody Object dorm, Model model) {
 		  Map<String, Object> objectMap = (Map<String, Object>) dorm;
@@ -398,7 +398,7 @@ public class CrudDormAPI {
 	}
 
 	@DeleteMapping("/del/{id}")
-	public void deleteDorm(@PathVariable("id") Integer id) {
+	public String deleteDorm(@PathVariable("id") Integer id) {
 		repo.deleteById(id);
 		Imgrepo.deleteImages(id);
 		contactrepo.deleteIContact(id);
@@ -407,6 +407,7 @@ public class CrudDormAPI {
 		nearbyrepo.deleteNear(id);
 		rulerepo.deleteRule(id);
 		System.out.println("Delete Success id " + id);
+		return "{message:Delete}";
 	}
 	@PutMapping("/updated/{id}")
 	public String updateDorm(@PathVariable("id")  Integer id, @RequestBody Object dorm, Model model) {

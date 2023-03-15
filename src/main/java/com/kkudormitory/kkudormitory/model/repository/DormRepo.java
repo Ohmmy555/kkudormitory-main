@@ -22,10 +22,7 @@ public interface DormRepo extends JpaRepository<Dormitory, Integer>  {
     //	                 + "FROM dormitory JOIN zone ON (zone.zoneid = dormitory.zoneid) "
     //	                 + "ORDER BY dormitory.dormID ASC",
     //	           nativeQuery = true)
-        @Query(value = "SELECT d.dormID, d.dorm_name, d.address, z.zonename \n"
-                + "FROM dormitory d \n"
-                + "JOIN zone z ON z.zoneid = d.zoneid \n"
-                + "ORDER BY d.dormID DESC",
+        @Query(value = "SELECT * FROM `dormitory` WHERE 1",
                 nativeQuery = true)
             List<Object> adminMain();
         

@@ -7,8 +7,15 @@ public class Facilites {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer FacID;
 	private String FacName;
-	private Integer FacTypeID;
-	private Integer dormID;
+    private String FacStatus;
+	public String getFacStatus() {
+        return FacStatus;
+    }
+    private Integer FacTypeID;
+	public void setFacStatus(String facStatus) {
+        FacStatus = facStatus;
+    }
+    private Integer dormID;
     public Integer getFacID() {
         return FacID;
     }

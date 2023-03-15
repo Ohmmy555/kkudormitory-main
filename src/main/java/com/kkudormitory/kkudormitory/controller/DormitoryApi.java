@@ -68,8 +68,8 @@ public class DormitoryApi {
 	public  List<Map<String, Object>>   getDrome(Model model) throws ClassNotFoundException, SQLException {
 	    List<Map<String, Object>> resultList = new ArrayList<>();
 	    Class.forName("com.mysql.cj.jdbc.Driver");
-	    Connection con = DriverManager.getConnection("jdbc:mysql://dbjavaweb.mysql.database.azure.com:3306/kkudormitory?characterEncoding=utf-8&useSSL=true", "supphitan", "0648801344@O");
-	    PreparedStatement dorm = con.prepareStatement("SELECT d.dormID, d.dorm_name, d.detail, d.month_price, GROUP_CONCAT(i.image_name) AS image_urls FROM dormitory d LEFT JOIN images i ON d.dormID = i.dormID "
+	    Connection con = DriverManager.getConnection("jdbc:mysql://localhost/kkudormitory?characterEncoding=utf-8&useSSL=true", "root", "");
+	    PreparedStatement dorm = con.prepareStatement("SELECT d.dormID, d.dorm_name, d.detail, d.month_price,d.address, GROUP_CONCAT(i.image_name) AS image_urls FROM dormitory d LEFT JOIN images i ON d.dormID = i.dormID "
 	    		+"GROUP BY d.dormID "
 	    		+ "ORDER BY dormid DESC "
 	    		+ "LIMIT 4");
@@ -81,11 +81,14 @@ public class DormitoryApi {
 	        dormData.put("dorm_name", resultSet.getObject("dorm_name"));
 	        dormData.put("detail", resultSet.getObject("detail"));
 	        dormData.put("month_price", resultSet.getObject("month_price"));
+			dormData.put("address", resultSet.getObject("address"));
 	        String imageUrlsStr = resultSet.getString("image_urls");
 	        if (imageUrlsStr != null) {
 	            String[] imageUrls = imageUrlsStr.split(",");
 	            dormData.put("image_urls", Arrays.asList(imageUrls)); 
-	        }
+	        }else{
+				dormData.put("image_urls",resultSet.getString("image_urls"));
+			}
 	        dormitories.add(dormData);
 	    }
 	    resultList.add(Map.of("data", dormitories));
