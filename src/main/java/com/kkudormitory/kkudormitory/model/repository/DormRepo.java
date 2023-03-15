@@ -3,7 +3,6 @@ package com.kkudormitory.kkudormitory.model.repository;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;

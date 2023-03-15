@@ -10,14 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Sort;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.data.domain.*;
 
 import com.kkudormitory.kkudormitory.model.repository.*;
-import com.kkudormitory.kkudormitory.model.bean.*;
 
 @CrossOrigin
 @RestController
@@ -26,8 +20,6 @@ public class ZoneApi {
 
     @Autowired
 	private ZoneRepo repo2;
-    @Autowired
-	private DormRepo repo;
 
     // @GetMapping("/{id}")
     // public List<Map<String, Object>> getDormitory(@PathVariable("id") Integer id) throws SQLException, ClassNotFoundException {

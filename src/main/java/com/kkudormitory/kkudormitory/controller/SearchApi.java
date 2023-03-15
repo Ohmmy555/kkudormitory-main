@@ -3,10 +3,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.sql.*;
 import java.util.*;
-import com.kkudormitory.kkudormitory.model.repository.SearchRepo;
 import com.kkudormitory.kkudormitory.model.repository.SearchRepository;
 
-import org.springframework.web.bind.annotation.PathVariable;
 
 @CrossOrigin
 @RestController

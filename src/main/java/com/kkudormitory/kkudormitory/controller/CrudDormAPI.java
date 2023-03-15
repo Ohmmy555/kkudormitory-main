@@ -1,9 +1,7 @@
 package com.kkudormitory.kkudormitory.controller;
-import java.io.Console;
 import java.sql.*;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.integration.IntegrationProperties.Error;
 import org.springframework.data.domain.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import com.kkudormitory.kkudormitory.model.bean.*;
 import com.kkudormitory.kkudormitory.model.repository.*;
 
-import ch.qos.logback.core.status.ErrorStatus;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 @CrossOrigin

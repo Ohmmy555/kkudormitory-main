@@ -1,6 +1,4 @@
 package com.kkudormitory.kkudormitory.model.repository;
-
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.jpa.repository.Query;
