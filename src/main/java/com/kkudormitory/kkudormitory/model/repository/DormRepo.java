@@ -35,6 +35,6 @@ public interface DormRepo extends JpaRepository<Dormitory, Integer>  {
                 nativeQuery = true)
             List<Object> mainScreenFindMueang();
 
-        @Query(value = "SELECT d.dormID, d.dorm_name, d.address, d.month_price , GROUP_CONCAT(i.image_name) AS image_urls, z.zonenameeng FROM dormitory d LEFT JOIN images i ON d.dormID = i.dormID LEFT JOIN zone z ON d.zoneid = z.zoneid WHERE d.zoneid=:zid GROUP BY d.dormID",nativeQuery = true)
-        List<Object> getMain(@Param("zid") Integer zid);
+            @Query(value = "SELECT d.dormID, d.dorm_name, d.address, d.month_price , GROUP_CONCAT(i.image_name) AS image_urls, z.zonenameeng , z.zonenamethai, z.zoneid FROM dormitory d LEFT JOIN images i ON d.dormID = i.dormID LEFT JOIN zone z ON d.zoneid = z.zoneid WHERE d.zoneid=:zid GROUP BY d.dormID LIMIT 3",nativeQuery = true)
+            List<Object> getMain(@Param("zid") Integer zid);
 }
