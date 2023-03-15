@@ -86,8 +86,6 @@ private List<Map<String, Object>> mappingDorm(List<Object> resultList){
         if(imageUrlsStr != null){
             String[] imageUrls = imageUrlsStr.split(",");
             dormData.put("image_urls", Arrays.asList(imageUrls));
-        }else{
-            dormData.put("image_urls", (String) ((Object[]) result)[4]);
         }
         String farStr = (String) ((Object[]) result)[5];
         if(farStr != null){
@@ -100,7 +98,7 @@ private List<Map<String, Object>> mappingDorm(List<Object> resultList){
 }
 
 @GetMapping("/{zone}")
-public List<Map<String, Object>> getDormitory(@PathVariable("zone") Integer zone, Pageable pageable) throws SQLException, ClassNotFoundException {
+public List<Map<String, Object>> getDormitory(@PathVariable("zone") Integer zone) throws SQLException, ClassNotFoundException {
     List<Object> result = repo2.getZone(zone);
     return mappingDorm(result);
 }

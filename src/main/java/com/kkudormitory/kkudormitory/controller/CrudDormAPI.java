@@ -1,7 +1,9 @@
 package com.kkudormitory.kkudormitory.controller;
+import java.io.Console;
 import java.sql.*;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.integration.IntegrationProperties.Error;
 import org.springframework.data.domain.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.kkudormitory.kkudormitory.model.bean.*;
 import com.kkudormitory.kkudormitory.model.repository.*;
 
+import ch.qos.logback.core.status.ErrorStatus;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 @CrossOrigin
@@ -37,10 +40,10 @@ public class CrudDormAPI {
 	//	http://localhost:8080/crud/main 
 	// ข้อมูลที่มาจะมีชื่อหอ ที่อยู่ ละโซน ทำ pagination ไม่ได้
 	//จะมาทุกหอเรียงใหม่สุดไปเก่า
-	   @GetMapping("/main")
-	public List<Object> showMain (){
-		return repo.adminMain();
-	}
+	//    @GetMapping("/main")
+	// public List<Object> showMain (){
+	// 	return repo.adminMain();
+	// }
 	
 	
 //	   หอพักทำ pagination 
@@ -70,10 +73,13 @@ public class CrudDormAPI {
 	    List<Object> aList = new ArrayList<>();
 	    while (resultSetFac.next()) {
 	        Map<String, Object> a = new HashMap<>();
-	        a.put("fac_typeid", resultSetFac.getObject("fac_typeid"));
-	        a.put("fac_name", resultSetFac.getObject("fac_name"));
-	        a.put("facid", resultSetFac.getObject("facid"));
-	        aList.add(a);
+			if(resultSetFac != null){
+				a.put("fac_typeid", resultSetFac.getObject("fac_typeid"));
+				a.put("fac_name", resultSetFac.getObject("fac_name"));
+				a.put("facid", resultSetFac.getObject("facid"));
+			}
+			aList.add(a);
+
 	    }
 //	    ------------------------------------------------------------------------------------------------
 	    Map<String, Object> b = new HashMap<>();
@@ -181,7 +187,7 @@ public class CrudDormAPI {
 //        "zoneID":1 
 // }
 	@PostMapping("/create")
-	public String createDorm(@RequestBody Object dorm, Model model) {
+	public Map<String,Object> createDorm(@RequestBody Object dorm, Model model) {
 		  Map<String, Object> objectMap = (Map<String, Object>) dorm;
 		  String dormname = (String) objectMap.get("dormname");
 		  String address = (String) objectMap.get("address");
@@ -329,7 +335,7 @@ public class CrudDormAPI {
 				        if(count==0) {
 							   r.setName((String) element);
 				        }else {
-							   r.setDistance(Integer.parseInt((String) element));
+							   r.setDistance(Float.parseFloat((String) element));
 				        }
 				        count++;
 				    }
@@ -356,7 +362,7 @@ public class CrudDormAPI {
 				        if(count==0) {
 							   r.setName((String) element);
 				        }else {
-							   r.setDistance(Integer.parseInt((String) element));
+							   r.setDistance(Float.parseFloat((String) element));
 				        }
 				        count++;
 				    }
@@ -384,7 +390,7 @@ public class CrudDormAPI {
 				        if(count==0) {
 							   r.setName((String) element);
 				        }else {
-							   r.setDistance(Integer.parseInt((String) element));
+							   r.setDistance(Float.parseFloat((String) element));
 				        }
 				        count++;
 				    }
@@ -393,12 +399,15 @@ public class CrudDormAPI {
 				   nearbyrepo.save(r);
 				   
 				}
+
+				Map<String,Object> error = new HashMap<>();
+				error.put("message", "Create dormitory successful");
 			 
-		return "TEST";
+		return error;
 	}
 
 	@DeleteMapping("/del/{id}")
-	public String deleteDorm(@PathVariable("id") Integer id) {
+	public Map<String,Object> deleteDorm(@PathVariable("id") Integer id) {
 		repo.deleteById(id);
 		Imgrepo.deleteImages(id);
 		contactrepo.deleteIContact(id);
@@ -407,10 +416,12 @@ public class CrudDormAPI {
 		nearbyrepo.deleteNear(id);
 		rulerepo.deleteRule(id);
 		System.out.println("Delete Success id " + id);
-		return "{message:Delete}";
+		Map<String,Object> error = new HashMap<>();
+		error.put("message", "Delete dormitory successful");
+		return error;
 	}
 	@PutMapping("/updated/{id}")
-	public String updateDorm(@PathVariable("id")  Integer id, @RequestBody Object dorm, Model model) {
+	public Map<String,Object> updateDorm(@PathVariable("id")  Integer id, @RequestBody Object dorm, Model model) {
 		  Map<String, Object> objectMap = (Map<String, Object>) dorm;
 		  String dormname = (String) objectMap.get("dormname");
 		  String address = (String) objectMap.get("address");
@@ -563,7 +574,7 @@ public class CrudDormAPI {
 						        if(count==0) {
 									   r.setName((String) element);
 						        }else {
-									   r.setDistance(Integer.parseInt((String) element));
+									   r.setDistance(Float.parseFloat((String) element));
 						        }
 						        count++;
 						    }
@@ -590,7 +601,7 @@ public class CrudDormAPI {
 						        if(count==0) {
 									   r.setName((String) element);
 						        }else {
-									   r.setDistance(Integer.parseInt((String) element));
+									   r.setDistance(Float.parseFloat((String) element));
 						        }
 						        count++;
 						    }
@@ -618,7 +629,7 @@ public class CrudDormAPI {
 						        if(count==0) {
 									   r.setName((String) element);
 						        }else {
-									   r.setDistance(Integer.parseInt((String) element));
+									   r.setDistance(Float.parseFloat((String) element));
 						        }
 						        count++;
 						    }
@@ -628,9 +639,15 @@ public class CrudDormAPI {
 						   
 						}
 					 
+			 Map<String,Object> error = new HashMap<>();
+			 error.put("message", "Update dormitory successful");
 			 
-			 
-		return "T_T";
+		return error;
+	}
+
+	@PostMapping("/create/test")
+	public Object createTest(@RequestBody Object dorm, Model model) {
+		return dorm;
 	}
 
 }

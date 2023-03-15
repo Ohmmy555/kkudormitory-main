@@ -18,7 +18,7 @@ public interface ZoneRepo extends JpaRepository<Zone, Integer> {
     @Query(value = "SELECT COUNT(*) FROM zone", nativeQuery = true)
     Integer getCount();
 
-    @Query(value = "SELECT d.dormID, d.dorm_name, d.address, d.month_price, GROUP_CONCAT(i.image_name) AS image_urls,GROUP_CONCAT(facilites.fac_name) AS facil, z.zonenamethai FROM dormitory d LEFT JOIN images i ON d.dormID = i.dormID LEFT JOIN facilites ON (facilites.dormid = d.dormid) LEFT JOIN zone z ON d.zoneid = z.zoneid WHERE d.zoneid =:zid GROUP BY d.dormID",
+    @Query(value = "SELECT d.dormID, d.dorm_name, d.address, d.month_price, GROUP_CONCAT(DISTINCT i.image_name) AS image_urls,GROUP_CONCAT(DISTINCT facilites.fac_name) AS facil, z.zonenamethai FROM dormitory d LEFT JOIN images i ON d.dormID = i.dormID LEFT JOIN facilites ON (facilites.dormid = d.dormid) LEFT JOIN zone z ON d.zoneid = z.zoneid WHERE d.zoneid =:zid GROUP BY d.dormID",
     nativeQuery = true)
     List<Object> getZone(Integer zid);
 

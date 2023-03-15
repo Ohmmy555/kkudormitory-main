@@ -7,7 +7,7 @@ public class NearByPlaces {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer NearByPlaces;
 	private String name;
-	private Integer distance;
+	private Float distance;
 	private Integer NearByPlacesType;
 	private Integer dormID;
     public Integer getNearByPlaces() {
@@ -22,10 +22,10 @@ public class NearByPlaces {
     public void setName(String name) {
         this.name = name;
     }
-    public Integer getDistance() {
+    public Float getDistance() {
         return distance;
     }
-    public void setDistance(Integer distance) {
+    public void setDistance(Float distance) {
         this.distance = distance;
     }
     public Integer getNearByPlacesType() {
